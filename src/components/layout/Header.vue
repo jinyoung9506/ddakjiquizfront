@@ -1,11 +1,10 @@
 <template>
     <div>
         <b-navbar toggleable="lg" type="dark" variant="info">
-            <b-navbar-brand href="#">딱지 퀴즈</b-navbar-brand>
+            <b-navbar-brand href="/">딱지 퀴즈 {{this.$route.meta.text}}</b-navbar-brand>
         </b-navbar>
     </div>
 </template>
-
 <script>
     export default {
         name: "Header",

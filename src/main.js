@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import Vuex from 'vuex'
 import router from './router'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import axios from 'axios'
@@ -8,6 +9,8 @@ import axios from 'axios'
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
+
+Vue.use(Vuex)
 
 Vue.prototype.$axios = axios
 
