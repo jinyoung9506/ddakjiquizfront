@@ -14,8 +14,11 @@
 
             <b-button type="submit" variant="primary">Submit</b-button>
             <b-button type="reset" variant="danger">Reset</b-button>
+            
 
         </b-form>
+
+        <button v-on:click="testCall">Test</button>
 
         <div>
             결과 테스트 창
@@ -47,12 +50,60 @@
         },
 
         methods: {
+            testCall() {
+                if (this.account.jwt != undefined) {
+                    this.$axios
+                    .get("https://quiz-aka.herokuapp.com/my_status", {
+                        headers: {  'Content-Type': 'application/json',
+                                    'Authorization': this.account.jwt,
+                        },
+                    })
+                    .then((res) => {
+                        console.log(res);
+                        alert(JSON.stringify(res));
+                        this.result = res;
+                    })
+                    .catch((error) => {
+                        this.result = error;
+                    })
+                    .finally(() => {
+                        alert("인증 테스트 끝")
+                    });
+                }
+                else {
+                    console.log("User token Undefined");
+                }
+            },
+
             onSignin(event) {
                 event.preventDefault()
                 alert(JSON.stringify(this.account))
-                this.getToken()
+                
+                if (this.account.id != undefined) {
+                    this.$axios
+                    .post("https://quiz-aka.herokuapp.com/auth/signin", {
+                        "id": this.account.id, "password": this.account.password
+                    })
+                    .then((res) => {
+                        console.log(res);
+                        alert(JSON.stringify(res));
+                        this.result = res;
+                        this.account.jwt = res.data.jwt;
+                    })
+                    .catch((error) => {
+                        this.result = error;
+                    })
+                    .finally(() => {
+                        console.log("로그인 테스트 끝");
+                    });
+                }
+                else {
+                    console.log("User name Undefined");
+                }
             },
-    
+            
+            
+
             onReset(event) {
                 event.preventDefault()
                 this.account.id = ''
@@ -62,29 +113,6 @@
                 this.$nextTick(() => {
                     this.show = true
                 })
-            },
-
-            getToken() {
-                if (name != undefined) {
-                    this.$axios
-                    .get("https://quiz-aka.herokuapp.com/auth/signin", {
-                        headers: {'Content-Type': 'application/json'},
-                        body: {"id": this.account.id, "password": this.account.password},
-                    })
-                    .then((res) => {
-                        console.log(res);
-                        this.result = res;
-                    })
-                    .catch((error) => {
-                        this.result = error;
-                    })
-                    .finally(() => {
-                        console.log("끝");
-                    });
-                }
-                else {
-                    console.log("User name Undefined");
-                }
             },
         },
         beforeCreate() {
