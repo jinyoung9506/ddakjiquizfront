@@ -53,7 +53,7 @@
             testCall() {
                 if (this.account.jwt != undefined) {
                     this.$axios
-                    .get("https://quiz-aka.herokuapp.com/my_status", {
+                    .get("", {
                         headers: {  'Content-Type': 'application/json',
                                     'Authorization': this.account.jwt,
                         },
@@ -81,7 +81,7 @@
                 
                 if (this.account.id != undefined) {
                     this.$axios
-                    .post("https://quiz-aka.herokuapp.com/auth/signin", {
+                    .post("", {
                         "id": this.account.id, "password": this.account.password
                     })
                     .then((res) => {
